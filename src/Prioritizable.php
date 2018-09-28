@@ -26,7 +26,10 @@ trait Prioritizable
      */
     protected function assignPrioritizable($data)
     {
-        $this->attempts = $data['attempts'];
+        if (isset($data['attempts'])) {
+            $this->attempts = $data['attempts'];
+        }
+
         $this->priority = $data['priority'];
     }
 }

@@ -9,6 +9,8 @@ namespace tmcsolution\messagingserviceclient;
  */
 class StatusRecord
 {
+    use Base;
+
     private $_previous;
     private $_new;
     private $_createdAt;

@@ -5,11 +5,13 @@ namespace tmcsolution\messagingserviceclient;
 /**
  * SMS-сообщение.
  *
+ * @property-read int $id
+ *
  * @package tmcsolution\messagingserviceclient
  */
 class Sms
 {
-    use Prioritizable, Statusable;
+    use Base, Prioritizable, Statusable;
 
     public $from;
     public $to;

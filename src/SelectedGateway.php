@@ -2,7 +2,7 @@
 
 namespace tmcsolution\messagingserviceclient;
 
-use yii\base;
+use yii\base\BaseObject;
 
 /**
  * Выбранный для отправки шлюз.

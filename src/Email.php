@@ -9,7 +9,7 @@ namespace tmcsolution\messagingserviceclient;
  */
 class Email
 {
-    use Gatewayable, Prioritizable, Statusable;
+    use Base, Gatewayable, Prioritizable, Statusable;
 
     /**
      * @var string[] Адрес отправителя в виде массива ["Василий", "vasya@ya.ru"] или ["vasya@ya.ru"].
@@ -83,9 +83,9 @@ class Email
         $this->body   = $data['body'];
         $this->format = $data['format'];
 
-        $this->_id      = $data['id'];
-        $this->_sentVia = $data['sentVia'];
-        $this->_token   = $data['token'];
+        $this->_id      = $data['id'] ?? null;
+        $this->_sentVia = $data['sentVia'] ?? null;
+        $this->_token   = $data['token'] ?? null;
 
         $this->assignGatewayable($data);
         $this->assignPrioritizable($data);

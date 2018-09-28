@@ -9,7 +9,7 @@ namespace tmcsolution\messagingserviceclient;
  */
 class Message
 {
-    use Statusable;
+    use Base, Statusable;
 
     /**
      * @var Email|null Сообщение электронной почты.

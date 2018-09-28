@@ -21,8 +21,10 @@ trait Gatewayable
      */
     protected function assignGatewayable($data)
     {
-        foreach ($data['gateways'] as $gateway) {
-            $this->gateways[] = new SelectedGateway($gateway);
+        if (isset($data['gateways'])) {
+            foreach ($data['gateways'] as $gateway) {
+                $this->gateways[] = new SelectedGateway($gateway);
+            }
         }
     }
 }

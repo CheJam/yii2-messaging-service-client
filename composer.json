@@ -1,0 +1,36 @@
+{
+    "name": "tmcsolution/yii2-messaging-service-client",
+    "description": "Клиент для взаимодействия с MessagingService",
+    "type": "yii2-extension",
+    "license": "Private",
+    "support": {
+        "source": "https://bitbucket.org/tmcsolution/yii2-messaging-service-client"
+    },
+    "authors": [
+        {
+            "name": "Sergey Shugaev",
+            "email": "sergey.shugaev@chejam.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "yiisoft/yii2": "~2.0.13.3",
+        "yiisoft/yii2-httpclient": "^2.0",
+        "tmcsolution/yii2-gustaf-client": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "tmcsolution\\messagingserviceclient\\": "/src"
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        },
+        {
+            "type": "vcs",
+            "url": "git@bitbucket.org:tmcsolution/yii2-gustaf-client.git"
+        }
+    ]
+}

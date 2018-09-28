@@ -9,6 +9,8 @@ namespace tmcsolution\messagingserviceclient;
  */
 trait Statusable
 {
+    use Base;
+
     private $_status;
     private $_statusRecords;
 
@@ -39,10 +41,14 @@ trait Statusable
      */
     protected function assignStatusable($data)
     {
-        $this->_status = new Status($data['status']);
+        if (isset($data['status'])) {
+            $this->_status = new Status($data['status']);
+        }
 
-        foreach ($data['statusRecords'] as $statusRecord) {
-            $this->_statusRecords[] = new StatusRecord($statusRecord);
+        if (isset($data['statusRecords'])) {
+            foreach ($data['statusRecords'] as $statusRecord) {
+                $this->_statusRecords[] = new StatusRecord($statusRecord);
+            }
         }
     }
 }
