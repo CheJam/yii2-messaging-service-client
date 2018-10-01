@@ -2,7 +2,7 @@
 
 namespace tmcsolution\messagingserviceclient;
 
-class Telegram
+class Telegram extends DriverMessage
 {
 
 }

@@ -5,21 +5,21 @@ namespace tmcsolution\messagingserviceclient;
 use yii\helpers\ArrayHelper;
 
 /**
- * Статус сущности.
+ * Базовый класс для сущности, имеющей статус и приоритет.
  *
  * @package tmcsolution\messagingserviceclient
  */
-class Status extends BaseModel
+class Queueable extends Statusable
 {
     /**
-     * @var int Код статуса.
+     * @var int|null Число попыток отправки.
      */
-    public $code;
+    public $attempts;
 
     /**
-     * @var string Описание статуса.
+     * @var int Приоритет.
      */
-    public $message;
+    public $priority;
 
     /**
      * @inheritdoc
@@ -27,8 +27,8 @@ class Status extends BaseModel
     public function scenarios()
     {
         $scenarios = [
-            self::SCENARIO_REQUEST => [],
-            self::SCENARIO_RESPONSE => ['code', 'message'],
+            self::SCENARIO_REQUEST => ['attempts', 'priority'],
+            self::SCENARIO_RESPONSE => ['attempts', 'priority'],
         ];
         return ArrayHelper::merge(parent::scenarios(), $scenarios);
     }
@@ -39,9 +39,8 @@ class Status extends BaseModel
     public function rules()
     {
         $rules = [
-            [['code', 'message'], 'required'],
-            ['code', 'integer'],
-            ['message', 'string'],
+            ['priority', 'required'],
+            [['attempts', 'priority'], 'integer'],
         ];
         return ArrayHelper::merge(parent::rules(), $rules);
     }

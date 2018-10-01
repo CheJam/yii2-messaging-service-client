@@ -2,53 +2,76 @@
 
 namespace tmcsolution\messagingserviceclient;
 
+use yii\helpers\ArrayHelper;
+
 /**
- * Дополнение для сущности, имеющей статус.
+ * Базовый класс для сущности, имеющей статус.
  *
  * @package tmcsolution\messagingserviceclient
  */
-trait Statusable
+class Statusable extends BaseModel
 {
-    use Base;
-
-    private $_status;
-    private $_statusRecords;
+    /**
+     * @var Status Статус сообщения.
+     */
+    public $status;
 
     /**
-     * Статус сообщения.
-     *
-     * @return Status
+     * @var StatusRecord[] История смены статусов сообщения.
      */
-    public function getStatus()
+    public $statusRecords;
+
+    /**
+     * @inheritdoc
+     */
+    public function scenarios()
     {
-        return $this->_status;
+        $scenarios = [
+            self::SCENARIO_REQUEST  => [],
+            self::SCENARIO_RESPONSE => ['status', 'statusRecords'],
+        ];
+        return ArrayHelper::merge(parent::scenarios(), $scenarios);
     }
 
     /**
-     * История смены статусов сообщения.
-     *
-     * @return StatusRecord[]
+     * @inheritdoc
      */
-    public function getStatusRecords()
+    public function rules()
     {
-        return $this->_statusRecords;
-    }
-
-    /**
-     * Присваивает полям в данном дополнении значения из массива данных.
-     *
-     * @param $data array Массив данных, полученных в результате парсинга JSON-ответа сервиса.
-     */
-    protected function assignStatusable($data)
-    {
-        if (isset($data['status'])) {
-            $this->_status = new Status($data['status']);
-        }
-
-        if (isset($data['statusRecords'])) {
-            foreach ($data['statusRecords'] as $statusRecord) {
-                $this->_statusRecords[] = new StatusRecord($statusRecord);
-            }
-        }
+        $rules = [
+            [
+                'status',
+                'validateArray',
+                'params' => [
+                    'filter' => function ($attribute, $value) {
+                        $status = new Status(['scenario' => $this->scenario]);
+                        $status->load($value, '');
+                        if (!$status->validate()) {
+                            $this->addError($attribute, $status->errors);
+                        }
+                        return $status;
+                    }
+                ],
+            ],
+            [
+                'statusRecords',
+                'validateArray',
+                'params' => [
+                    'filter' => function ($attribute, $value) {
+                        $result = [];
+                        foreach ($value as $statusRecord) {
+                            $selectedGateway = new StatusRecord(['scenario' => $this->scenario]);
+                            $selectedGateway->load($statusRecord, '');
+                            if (!$selectedGateway->validate()) {
+                                $this->addError($attribute, $selectedGateway->errors);
+                            }
+                            $result[] = $selectedGateway;
+                        }
+                        return $result;
+                    }
+                ],
+            ],
+        ];
+        return ArrayHelper::merge(parent::rules(), $rules);
     }
 }

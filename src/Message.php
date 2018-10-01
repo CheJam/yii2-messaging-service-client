@@ -2,14 +2,29 @@
 
 namespace tmcsolution\messagingserviceclient;
 
+use yii\helpers\ArrayHelper;
+
 /**
  * Сообщение.
  *
  * @package tmcsolution\messagingserviceclient
  */
-class Message
+class Message extends Statusable
 {
-    use Base, Statusable;
+    /**
+     * @var int Идентификатор сообщения.
+     */
+    public $id;
+
+    /**
+     * @var int Идентификатор потребителя.
+     */
+    public $consumerId;
+
+    /**
+     * @var \DateTime Дата и время создания сообщения.
+     */
+    public $createdAt;
 
     /**
      * @var Email|null Сообщение электронной почты.
@@ -31,56 +46,95 @@ class Message
      */
     public $viber;
 
-    private $_id;
-    private $_consumerId;
-    private $_createdAt;
-
     /**
-     * Идентификатор сообщения.
-     *
-     * @return int
+     * @inheritdoc
      */
-    public function getId()
+    public function scenarios()
     {
-        return $this->_id;
+        $scenarios = [
+            self::SCENARIO_REQUEST  => ['email', 'sms', 'telegram', 'viber'],
+            self::SCENARIO_RESPONSE => ['id', 'consumerId', 'createdAt', 'email', 'sms', 'telegram', 'viber'],
+        ];
+        return ArrayHelper::merge(parent::scenarios(), $scenarios);
     }
 
     /**
-     * Идентификатор потребителя.
-     *
-     * @return int
+     * @inheritdoc
      */
-    public function getConsumerId()
+    public function rules()
     {
-        return $this->_consumerId;
-    }
-
-    /**
-     * Дата и время создания сообщения.
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->_createdAt;
-    }
-
-    /**
-     * Создаёт сообщение из массива данных.
-     *
-     * @param $data array Массив данных, полученных в результате парсинга JSON-ответа сервиса.
-     */
-    public function __construct($data)
-    {
-        $this->email    = new Email($data['email']);
-        $this->sms      = new Sms($data['sms']);
-        $this->telegram = new Telegram($data['telegram']);
-        $this->viber    = new Viber($data['viber']);
-
-        $this->_id         = $data['id'];
-        $this->_consumerId = $data['consumerId'];
-        $this->_createdAt  = new \DateTime($data['createdAt']);
-
-        $this->assignStatusable($data);
+        $rules = [
+            [['id', 'consumerId', 'createdAt'], 'required'],
+            [['id', 'consumerId'], 'integer'],
+            [
+                'createdAt',
+                'match',
+                'pattern' => '/^[0-9]{4}-[01][0-9]-[0-3][0-9]T[0-2][0-9]:[0-5][0-9]:[0-5][0-9]\.[0-9]+Z*$/'
+            ],
+            ['createdAt', 'filter', 'filter' => function ($value) {
+                return new \DateTime($value);
+            }],
+            [
+                'email',
+                'validateArray',
+                'params' => [
+                    'skipScenario' => [self::SCENARIO_REQUEST, self::SCENARIO_RESPONSE],
+                    'filter'       => function ($attribute, $value) {
+                        $email = new Email(['scenario' => $this->scenario]);
+                        $email->load($value, '');
+                        if (!$email->validate()) {
+                            $this->addError($attribute, $email->errors);
+                        }
+                        return $email;
+                    }
+                ],
+            ],
+            [
+                'sms',
+                'validateArray',
+                'params' => [
+                    'skipScenario' => [self::SCENARIO_REQUEST, self::SCENARIO_RESPONSE],
+                    'filter'       => function ($attribute, $value) {
+                        $sms = new Sms(['scenario' => $this->scenario]);
+                        $sms->load($value, '');
+                        if (!$sms->validate()) {
+                            $this->addError($attribute, $sms->errors);
+                        }
+                        return $sms;
+                    }
+                ],
+            ],
+            [
+                'telegram',
+                'validateArray',
+                'params' => [
+                    'skipScenario' => [self::SCENARIO_REQUEST, self::SCENARIO_RESPONSE],
+                    'filter'       => function ($attribute, $value) {
+                        $telegram = new Telegram(['scenario' => $this->scenario]);
+                        $telegram->load($value, '');
+                        if (!$telegram->validate()) {
+                            $this->addError($attribute, $telegram->errors);
+                        }
+                        return $telegram;
+                    }
+                ],
+            ],
+            [
+                'viber',
+                'validateArray',
+                'params' => [
+                    'skipScenario' => [self::SCENARIO_REQUEST, self::SCENARIO_RESPONSE],
+                    'filter'       => function ($attribute, $value) {
+                        $viber = new Viber(['scenario' => $this->scenario]);
+                        $viber->load($value, '');
+                        if (!$viber->validate()) {
+                            $this->addError($attribute, $viber->errors);
+                        }
+                        return $viber;
+                    }
+                ],
+            ],
+        ];
+        return ArrayHelper::merge(parent::rules(), $rules);
     }
 }

@@ -2,58 +2,72 @@
 
 namespace tmcsolution\messagingserviceclient;
 
+use yii\helpers\ArrayHelper;
+
 /**
  * Запись истории изменений статусов.
  *
  * @package tmcsolution\messagingserviceclient
  */
-class StatusRecord
+class StatusRecord extends BaseModel
 {
-    use Base;
-
-    private $_previous;
-    private $_new;
-    private $_createdAt;
+    /**
+     * @var Status Предыдущий статус.
+     */
+    public $previous;
 
     /**
-     * Предыдущий статус.
-     *
-     * @return Status
+     * @var Status Новый статус.
      */
-    public function getPrevious()
+    public $new;
+
+    /**
+     * @var \DateTime Дата и время смены статуса.
+     */
+    public $createdAt;
+
+    /**
+     * @inheritdoc
+     */
+    public function scenarios()
     {
-        return $this->_previous;
+        $scenarios = [
+            self::SCENARIO_REQUEST  => [],
+            self::SCENARIO_RESPONSE => ['previous', 'new', 'createdAt'],
+        ];
+        return ArrayHelper::merge(parent::scenarios(), $scenarios);
     }
 
     /**
-     * Новый статус.
-     *
-     * @return Status
+     * @inheritdoc
      */
-    public function getNew()
+    public function rules()
     {
-        return $this->_new;
-    }
-
-    /**
-     * Дата и время смены статуса.
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->_createdAt;
-    }
-
-    /**
-     * Создаёт запись истории изменений статусов из массива данных.
-     *
-     * @param $data array Массив данных, полученных в результате парсинга JSON-ответа сервиса.
-     */
-    public function __construct($data)
-    {
-        $this->_previous  = new Status($data['previous']);
-        $this->_new       = new Status($data['new']);
-        $this->_createdAt = new \DateTime($data['createdAt']);
+        $rules = [
+            ['createdAt', 'required'],
+            [
+                'createdAt',
+                'match',
+                'pattern' => '/^[0-9]{4}-[01][0-9]-[0-3][0-9]T[0-2][0-9]:[0-5][0-9]:[0-5][0-9]\.[0-9]+Z*$/'
+            ],
+            ['createdAt', 'filter', 'filter' => function ($value) {
+                return new \DateTime($value);
+            }],
+            [
+                ['previous', 'new'],
+                'validateArray',
+                'params' => [
+                    'filter' => function ($attribute, $value) {
+                        $status = new Status(['scenario' => $this->scenario]);
+                        $status->load($value, '');
+                        if (!$status->validate()) {
+                            $this->addError($attribute, $status->errors);
+                        }
+                        return $status;
+                    }
+                ],
+            ],
+        ];
+        return ArrayHelper::merge(parent::rules(), $rules);
     }
 }

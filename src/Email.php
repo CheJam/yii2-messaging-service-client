@@ -2,14 +2,19 @@
 
 namespace tmcsolution\messagingserviceclient;
 
+use yii\helpers\ArrayHelper;
+
 /**
  * Сообщение электронной почты.
  *
  * @package tmcsolution\messagingserviceclient
  */
-class Email
+class Email extends DriverMessage
 {
-    use Base, Gatewayable, Prioritizable, Statusable;
+    /**
+     * @var int Идентификатор EMail-сообщения.
+     */
+    public $id;
 
     /**
      * @var string[] Адрес отправителя в виде массива ["Василий", "vasya@ya.ru"] или ["vasya@ya.ru"].
@@ -36,59 +41,39 @@ class Email
      */
     public $format;
 
-    private $_id;
-    private $_sentVia;
-    private $_token;
+    /**
+     * @var string|null Название почтового сервера, через который отправлено сообщение.
+     */
+    public $sentVia;
 
     /**
-     * Идентификатор EMail-сообщения.
-     *
-     * @return int
+     * @var string Токен сообщения для отслеживания прочтения.
      */
-    public function getId()
+    public $token;
+
+    /**
+     * @inheritdoc
+     */
+    public function scenarios()
     {
-        return $this->_id;
+        $scenarios = [
+            self::SCENARIO_REQUEST => ['from', 'to', 'title', 'body', 'format'],
+            self::SCENARIO_RESPONSE => ['id', 'from', 'to', 'title', 'body', 'format', 'sentVia', 'token'],
+        ];
+        return ArrayHelper::merge(parent::scenarios(), $scenarios);
     }
 
     /**
-     * Название почтового сервера, через который отправлено сообщение.
-     *
-     * @return string|null
+     * @inheritdoc
      */
-    public function getSentVia()
+    public function rules()
     {
-        return $this->_sentVia;
-    }
-
-    /**
-     * Токен сообщения для отслеживания прочтения.
-     *
-     * @return string
-     */
-    public function getToken()
-    {
-        return $this->_token;
-    }
-
-    /**
-     * Создаёт EMail-сообщение из массива данных.
-     *
-     * @param $data array Массив данных, полученных в результате парсинга JSON-ответа сервиса.
-     */
-    public function __construct($data)
-    {
-        $this->from   = $data['from'];
-        $this->to     = $data['to'];
-        $this->title  = $data['title'];
-        $this->body   = $data['body'];
-        $this->format = $data['format'];
-
-        $this->_id      = $data['id'] ?? null;
-        $this->_sentVia = $data['sentVia'] ?? null;
-        $this->_token   = $data['token'] ?? null;
-
-        $this->assignGatewayable($data);
-        $this->assignPrioritizable($data);
-        $this->assignStatusable($data);
+        $rules = [
+            [['id', 'from', 'to', 'title', 'body', 'format', 'token'], 'required'],
+            ['id', 'integer'],
+            [['title', 'body', 'format', 'sentVia', 'token'], 'string'],
+            [['from', 'to'], 'validateArray'],
+        ];
+        return ArrayHelper::merge(parent::rules(), $rules);
     }
 }

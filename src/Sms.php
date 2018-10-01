@@ -2,47 +2,57 @@
 
 namespace tmcsolution\messagingserviceclient;
 
+use yii\helpers\ArrayHelper;
+
 /**
  * SMS-сообщение.
  *
- * @property-read int $id
- *
  * @package tmcsolution\messagingserviceclient
  */
-class Sms
+class Sms extends Queueable
 {
-    use Base, Prioritizable, Statusable;
-
-    public $from;
-    public $to;
-    public $text;
-
-    private $_id;
+    /**
+     * @var int Идентификатор SMS-сообщения.
+     */
+    public $id;
 
     /**
-     * Идентификатор SMS-сообщения.
-     *
-     * @return int
+     * @var string Номер или текстовый идентификатор отправителя.
      */
-    public function getId()
+    public $from;
+
+    /**
+     * @var string Номер получателя.
+     */
+    public $to;
+
+    /**
+     * @var string Текстовая часть сообщения.
+     */
+    public $text;
+
+    /**
+     * @inheritdoc
+     */
+    public function scenarios()
     {
-        return $this->_id;
+        $scenarios = [
+            self::SCENARIO_REQUEST => ['from', 'to', 'text'],
+            self::SCENARIO_RESPONSE => ['id', 'from', 'to', 'text'],
+        ];
+        return ArrayHelper::merge(parent::scenarios(), $scenarios);
     }
 
     /**
-     * Создаёт SMS-сообщение из массива данных.
-     *
-     * @param $data array Массив данных, полученных в результате парсинга JSON-ответа сервиса.
+     * @inheritdoc
      */
-    public function __construct($data)
+    public function rules()
     {
-        $this->from = $data['from'];
-        $this->to   = $data['to'];
-        $this->text = $data['text'];
-
-        $this->_id = $data['id'];
-
-        $this->assignPrioritizable($data);
-        $this->assignStatusable($data);
+        $rules = [
+            [['id', 'from', 'to', 'text'], 'required'],
+            ['id', 'integer'],
+            [['from', 'to', 'text'], 'string'],
+        ];
+        return ArrayHelper::merge(parent::rules(), $rules);
     }
 }

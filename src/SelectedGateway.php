@@ -2,14 +2,14 @@
 
 namespace tmcsolution\messagingserviceclient;
 
-use yii\base\BaseObject;
+use yii\helpers\ArrayHelper;
 
 /**
  * Выбранный для отправки шлюз.
  *
  * @package tmcsolution\messagingserviceclient
  */
-class SelectedGateway extends BaseObject
+class SelectedGateway extends BaseModel
 {
     /**
      * @var string Название шлюза.
@@ -20,4 +20,29 @@ class SelectedGateway extends BaseObject
      * @var int Приоритет шлюза.
      */
     public $priority;
+
+    /**
+     * @inheritdoc
+     */
+    public function scenarios()
+    {
+        $scenarios = [
+            self::SCENARIO_REQUEST => ['name', 'priority'],
+            self::SCENARIO_RESPONSE => ['name', 'priority'],
+        ];
+        return ArrayHelper::merge(parent::scenarios(), $scenarios);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        $rules = [
+            [['name', 'priority'], 'required'],
+            ['name', 'string'],
+            ['priority', 'integer'],
+        ];
+        return ArrayHelper::merge(parent::rules(), $rules);
+    }
 }

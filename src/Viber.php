@@ -2,7 +2,7 @@
 
 namespace tmcsolution\messagingserviceclient;
 
-class Viber
+class Viber extends DriverMessage
 {
 
 }
