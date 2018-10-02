@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "c3b4eee2118bc4ef3c01e2b04d247f84",
+    "content-hash": "27ca54ad3fc7951d246799f4a9565011",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -194,11 +194,11 @@
         },
         {
             "name": "tmcsolution/yii2-gustaf-client",
-            "version": "dev-master",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "git@bitbucket.org:tmcsolution/yii2-gustaf-client.git",
-                "reference": "a08f6733164dc0b82be7677f85fab3c8d59e84e2"
+                "reference": "175a0f9ddb14ba972ea8ba9af449340b6df9bda1"
             },
             "require": {
                 "yiisoft/yii2": "~2.0.13.3",
@@ -223,7 +223,7 @@
             "support": {
                 "source": "https://bitbucket.org/tmcsolution/yii2-gustaf-client"
             },
-            "time": "2018-09-28T14:21:35+00:00"
+            "time": "2018-10-02T12:17:59+00:00"
         },
         {
             "name": "yiisoft/yii2",
@@ -430,11 +430,11 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "tmcsolution/yii2-gustaf-client": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "ext-json": "*"
+    },
     "platform-dev": []
 }

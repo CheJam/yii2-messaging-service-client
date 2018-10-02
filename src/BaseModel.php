@@ -22,6 +22,14 @@ class BaseModel extends Model
     const SCENARIO_RESPONSE = 'response';
 
     /**
+     * @inheritdoc
+     */
+    public function fields()
+    {
+        return $this->scenarios()[$this->scenario];
+    }
+
+    /**
      * Проверяет, является ли значение атрибута массивом.
      * Если задан фильтр для атрибута, применяет его.
      *

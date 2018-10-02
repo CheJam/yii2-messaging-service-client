@@ -70,7 +70,7 @@ class InstantMessage extends DriverMessage
      */
     public function validateIntOrStr($attribute, $params)
     {
-        if ($this->hasErrors()) {
+        if ($this->hasErrors() || is_null($this->$attribute)) {
             return;
         }
 
