@@ -37,7 +37,7 @@ class Sms extends Queueable
     public function scenarios()
     {
         $scenarios = [
-            self::SCENARIO_REQUEST => ['from', 'to', 'text'],
+            self::SCENARIO_REQUEST  => ['from', 'to', 'text'],
             self::SCENARIO_RESPONSE => ['id', 'from', 'to', 'text'],
         ];
         return ArrayHelper::merge(parent::scenarios(), $scenarios);

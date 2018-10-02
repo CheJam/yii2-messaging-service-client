@@ -27,7 +27,7 @@ class Status extends BaseModel
     public function scenarios()
     {
         $scenarios = [
-            self::SCENARIO_REQUEST => [],
+            self::SCENARIO_REQUEST  => [],
             self::SCENARIO_RESPONSE => ['code', 'message'],
         ];
         return ArrayHelper::merge(parent::scenarios(), $scenarios);

@@ -27,7 +27,7 @@ class SelectedGateway extends BaseModel
     public function scenarios()
     {
         $scenarios = [
-            self::SCENARIO_REQUEST => ['name', 'priority'],
+            self::SCENARIO_REQUEST  => ['name', 'priority'],
             self::SCENARIO_RESPONSE => ['name', 'priority'],
         ];
         return ArrayHelper::merge(parent::scenarios(), $scenarios);

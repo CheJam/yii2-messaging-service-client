@@ -27,7 +27,7 @@ class Queueable extends Statusable
     public function scenarios()
     {
         $scenarios = [
-            self::SCENARIO_REQUEST => ['attempts', 'priority'],
+            self::SCENARIO_REQUEST  => ['attempts', 'priority'],
             self::SCENARIO_RESPONSE => ['attempts', 'priority'],
         ];
         return ArrayHelper::merge(parent::scenarios(), $scenarios);

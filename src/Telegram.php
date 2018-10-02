@@ -2,7 +2,11 @@
 
 namespace tmcsolution\messagingserviceclient;
 
-class Telegram extends DriverMessage
+/**
+ * Telegram-сообщение.
+ *
+ * @package tmcsolution\messagingserviceclient
+ */
+class Telegram extends InstantMessage
 {
-
 }

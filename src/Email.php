@@ -42,11 +42,6 @@ class Email extends DriverMessage
     public $format;
 
     /**
-     * @var string|null Название почтового сервера, через который отправлено сообщение.
-     */
-    public $sentVia;
-
-    /**
      * @var string Токен сообщения для отслеживания прочтения.
      */
     public $token;
@@ -57,7 +52,7 @@ class Email extends DriverMessage
     public function scenarios()
     {
         $scenarios = [
-            self::SCENARIO_REQUEST => ['from', 'to', 'title', 'body', 'format'],
+            self::SCENARIO_REQUEST  => ['from', 'to', 'title', 'body', 'format'],
             self::SCENARIO_RESPONSE => ['id', 'from', 'to', 'title', 'body', 'format', 'sentVia', 'token'],
         ];
         return ArrayHelper::merge(parent::scenarios(), $scenarios);

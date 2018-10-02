@@ -32,7 +32,7 @@ class Message extends Statusable
     public $email;
 
     /**
-     * @var Sms|null СМС сообщение.
+     * @var Sms|null СМС-сообщение.
      */
     public $sms;
 

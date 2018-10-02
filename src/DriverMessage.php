@@ -17,13 +17,18 @@ class DriverMessage extends Queueable
     public $gateways;
 
     /**
+     * @var string|null Название шлюза, через который отправлено сообщение.
+     */
+    public $sentVia;
+
+    /**
      * @inheritdoc
      */
     public function scenarios()
     {
         $scenarios = [
             self::SCENARIO_REQUEST  => ['gateways'],
-            self::SCENARIO_RESPONSE => ['gateways'],
+            self::SCENARIO_RESPONSE => ['gateways', 'sentVia'],
         ];
         return ArrayHelper::merge(parent::scenarios(), $scenarios);
     }
@@ -34,6 +39,7 @@ class DriverMessage extends Queueable
     public function rules()
     {
         $rules = [
+            ['sentVia', 'string'],
             [
                 'gateways',
                 'validateArray',
