@@ -92,6 +92,10 @@ $message = new Message(['scenario' => Message::SCENARIO_RESPONSE]);
     ...
     {
         "type": "vcs",
+        "url": "git@bitbucket.org:tmcsolution/yii2-gustaf-client.git"
+    },
+    {
+        "type": "vcs",
         "url": "git@bitbucket.org:tmcsolution/yii2-messaging-service-client.git"
     },
     ...
