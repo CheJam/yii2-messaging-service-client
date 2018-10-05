@@ -1,7 +1,8 @@
 <?php
 
-namespace tmcsolution\messagingserviceclient;
+namespace tmcsolution\messagingserviceclient\base;
 
+use tmcsolution\messagingserviceclient\SelectedGateway;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -47,11 +48,11 @@ class DriverMessage extends Queueable
                     'skipScenario' => self::SCENARIO_REQUEST,
                     'filter'       => function ($attribute, $value) {
                         $result = [];
-                        foreach ($value as $gateway) {
+                        foreach ($value as $i => $gateway) {
                             $selectedGateway = new SelectedGateway(['scenario' => $this->scenario]);
                             $selectedGateway->load($gateway, '');
                             if (!$selectedGateway->validate()) {
-                                $this->addError($attribute, $selectedGateway->errors);
+                                $this->addModelErrors($attribute, $selectedGateway, $i);
                             }
                             $result[] = $selectedGateway;
                         }

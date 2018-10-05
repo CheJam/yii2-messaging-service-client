@@ -2,6 +2,7 @@
 
 namespace tmcsolution\messagingserviceclient;
 
+use tmcsolution\messagingserviceclient\base\BaseModel;
 use yii\helpers\ArrayHelper;
 
 /**

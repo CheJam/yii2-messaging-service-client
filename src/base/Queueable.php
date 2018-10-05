@@ -1,6 +1,6 @@
 <?php
 
-namespace tmcsolution\messagingserviceclient;
+namespace tmcsolution\messagingserviceclient\base;
 
 use yii\helpers\ArrayHelper;
 

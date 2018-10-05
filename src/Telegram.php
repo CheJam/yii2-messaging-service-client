@@ -2,6 +2,8 @@
 
 namespace tmcsolution\messagingserviceclient;
 
+use tmcsolution\messagingserviceclient\base\InstantMessage;
+
 /**
  * Telegram-сообщение.
  *

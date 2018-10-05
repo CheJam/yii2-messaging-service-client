@@ -2,6 +2,7 @@
 
 namespace tmcsolution\messagingserviceclient;
 
+use tmcsolution\messagingserviceclient\base\Queueable;
 use yii\helpers\ArrayHelper;
 
 /**

@@ -2,6 +2,7 @@
 
 namespace tmcsolution\messagingserviceclient;
 
+use tmcsolution\messagingserviceclient\base\BaseModel;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -61,7 +62,7 @@ class StatusRecord extends BaseModel
                         $status = new Status(['scenario' => $this->scenario]);
                         $status->load($value, '');
                         if (!$status->validate()) {
-                            $this->addError($attribute, $status->errors);
+                            $this->addModelErrors($attribute, $status);
                         }
                         return $status;
                     }

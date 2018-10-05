@@ -2,6 +2,7 @@
 
 namespace tmcsolution\messagingserviceclient;
 
+use tmcsolution\messagingserviceclient\base\Statusable;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -83,7 +84,7 @@ class Message extends Statusable
                         $email = new Email(['scenario' => $this->scenario]);
                         $email->load($value, '');
                         if (!$email->validate()) {
-                            $this->addError($attribute, $email->errors);
+                            $this->addModelErrors($attribute, $email);
                         }
                         return $email;
                     }
@@ -98,7 +99,7 @@ class Message extends Statusable
                         $sms = new Sms(['scenario' => $this->scenario]);
                         $sms->load($value, '');
                         if (!$sms->validate()) {
-                            $this->addError($attribute, $sms->errors);
+                            $this->addModelErrors($attribute, $sms);
                         }
                         return $sms;
                     }
@@ -113,7 +114,7 @@ class Message extends Statusable
                         $telegram = new Telegram(['scenario' => $this->scenario]);
                         $telegram->load($value, '');
                         if (!$telegram->validate()) {
-                            $this->addError($attribute, $telegram->errors);
+                            $this->addModelErrors($attribute, $telegram);
                         }
                         return $telegram;
                     }
@@ -128,7 +129,7 @@ class Message extends Statusable
                         $viber = new Viber(['scenario' => $this->scenario]);
                         $viber->load($value, '');
                         if (!$viber->validate()) {
-                            $this->addError($attribute, $viber->errors);
+                            $this->addModelErrors($attribute, $viber);
                         }
                         return $viber;
                     }

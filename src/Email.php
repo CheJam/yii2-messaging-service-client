@@ -2,6 +2,7 @@
 
 namespace tmcsolution\messagingserviceclient;
 
+use tmcsolution\messagingserviceclient\base\DriverMessage;
 use yii\helpers\ArrayHelper;
 
 /**

@@ -1,7 +1,9 @@
 <?php
 
-namespace tmcsolution\messagingserviceclient;
+namespace tmcsolution\messagingserviceclient\base;
 
+use tmcsolution\messagingserviceclient\Status;
+use tmcsolution\messagingserviceclient\StatusRecord;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -47,7 +49,7 @@ class Statusable extends BaseModel
                         $status = new Status(['scenario' => $this->scenario]);
                         $status->load($value, '');
                         if (!$status->validate()) {
-                            $this->addError($attribute, $status->errors);
+                            $this->addModelErrors($attribute, $status);
                         }
                         return $status;
                     }
@@ -59,11 +61,11 @@ class Statusable extends BaseModel
                 'params' => [
                     'filter' => function ($attribute, $value) {
                         $result = [];
-                        foreach ($value as $statusRecord) {
+                        foreach ($value as $i => $statusRecord) {
                             $selectedGateway = new StatusRecord(['scenario' => $this->scenario]);
                             $selectedGateway->load($statusRecord, '');
                             if (!$selectedGateway->validate()) {
-                                $this->addError($attribute, $selectedGateway->errors);
+                                $this->addModelErrors($attribute, $selectedGateway, $i);
                             }
                             $result[] = $selectedGateway;
                         }

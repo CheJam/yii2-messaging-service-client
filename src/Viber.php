@@ -2,6 +2,7 @@
 
 namespace tmcsolution\messagingserviceclient;
 
+use tmcsolution\messagingserviceclient\base\InstantMessage;
 use yii\helpers\ArrayHelper;
 
 /**
