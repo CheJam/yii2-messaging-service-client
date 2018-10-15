@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "27ca54ad3fc7951d246799f4a9565011",
+    "content-hash": "db81c6d08fc685d0b23d1e425763ac57",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -191,39 +191,6 @@
                 "html"
             ],
             "time": "2018-02-23T01:58:20+00:00"
-        },
-        {
-            "name": "tmcsolution/yii2-gustaf-client",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "git@bitbucket.org:tmcsolution/yii2-gustaf-client.git",
-                "reference": "175a0f9ddb14ba972ea8ba9af449340b6df9bda1"
-            },
-            "require": {
-                "yiisoft/yii2": "~2.0.13.3",
-                "yiisoft/yii2-httpclient": "^2.0"
-            },
-            "type": "yii2-extension",
-            "autoload": {
-                "psr-4": {
-                    "tmcsolution\\gustafclient\\": "/src"
-                }
-            },
-            "license": [
-                "Private"
-            ],
-            "authors": [
-                {
-                    "name": "Sergey Shugaev",
-                    "email": "sergey.shugaev@chejam.com"
-                }
-            ],
-            "description": "Шаблон REST API клиента для клиентов сервисов, основанных на gustaf",
-            "support": {
-                "source": "https://bitbucket.org/tmcsolution/yii2-gustaf-client"
-            },
-            "time": "2018-10-02T12:17:59+00:00"
         },
         {
             "name": "yiisoft/yii2",

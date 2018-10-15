@@ -16,8 +16,8 @@
     "minimum-stability": "dev",
     "require": {
         "yiisoft/yii2": "~2.0.13.3",
-        "ext-json": "*",
-        "tmcsolution/yii2-gustaf-client": "^1.0.0"
+        "yiisoft/yii2-httpclient": "^2.0",
+        "ext-json": "*"
     },
     "autoload": {
         "psr-4": {
@@ -28,10 +28,6 @@
         {
             "type": "composer",
             "url": "https://asset-packagist.org"
-        },
-        {
-            "type": "vcs",
-            "url": "git@bitbucket.org:tmcsolution/yii2-gustaf-client.git"
         }
     ]
 }

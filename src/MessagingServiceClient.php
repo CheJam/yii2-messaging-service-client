@@ -2,13 +2,13 @@
 
 namespace tmcsolution\messagingserviceclient;
 
-use tmcsolution\gustafclient\GustafClient;
+use tmcsolution\messagingserviceclient\base\ApiClient;
 use yii\base\InvalidConfigException;
 use yii\base\InvalidValueException;
 use yii\helpers\Json;
 use yii\web\HttpException;
 
-class MessagingServiceClient extends GustafClient
+class MessagingServiceClient extends ApiClient
 {
     /**
      * Возвращает массив сообщений.
