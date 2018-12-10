@@ -1,6 +1,6 @@
 {
     "name": "tmcsolution/yii2-messaging-service-client",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Клиент для взаимодействия с MessagingService",
     "type": "yii2-extension",
     "license": "Private",
