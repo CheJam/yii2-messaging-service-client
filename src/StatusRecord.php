@@ -2,6 +2,7 @@
 
 namespace tmcsolution\messagingserviceclient;
 
+use DateTime;
 use tmcsolution\messagingserviceclient\base\BaseModel;
 use yii\helpers\ArrayHelper;
 
@@ -23,7 +24,7 @@ class StatusRecord extends BaseModel
     public $new;
 
     /**
-     * @var \DateTime Дата и время смены статуса.
+     * @var DateTime Дата и время смены статуса.
      */
     public $createdAt;
 
@@ -52,7 +53,7 @@ class StatusRecord extends BaseModel
                 'pattern' => '/^[0-9]{4}-[01][0-9]-[0-3][0-9]T[0-2][0-9]:[0-5][0-9]:[0-5][0-9]\.[0-9]+Z*$/'
             ],
             ['createdAt', 'filter', 'filter' => function ($value) {
-                return new \DateTime($value);
+                return new DateTime($value);
             }],
             [
                 ['previous', 'new'],

@@ -3,6 +3,7 @@
 namespace tmcsolution\messagingserviceclient\base;
 
 use Yii;
+use yii\base\Component;
 use yii\base\InvalidConfigException;
 use yii\httpclient\Client;
 use yii\web\HttpException;
@@ -12,7 +13,7 @@ use yii\web\HttpException;
  *
  * @package tmcsolution
  */
-class ApiClient extends \yii\base\Component
+class ApiClient extends Component
 {
     /**
      * @var string|null Bearer-токен аутентификации/авторизации в WebAPI.
@@ -71,7 +72,7 @@ class ApiClient extends \yii\base\Component
         if (!is_object($this->_httpClient)) {
             $this->_httpClient = Yii::createObject(
                 [
-                    'class'          => Client::className(),
+                    'class'          => Client::class,
                     'baseUrl'        => $this->baseUrl,
                     'requestConfig'  => $this->requestConfig,
                     'responseConfig' => $this->responseConfig,
@@ -89,10 +90,10 @@ class ApiClient extends \yii\base\Component
      * @param array  $data    Массив данных для запроса.
      * @param array  $headers HTTP-заголовки запроса.
      * @param array  $options Массив опций для запроса. Если не пустой, заменяет глобально заданные опции 'requestOptions'.
+     *
      * @return mixed Массив данных, представляющий собой ответ сервиса.
      * @throws HttpException Если сервис вернул ошибку.
      * @throws InvalidConfigException Если клиент был неправильно сконфигурирован.
-     * @throws \yii\httpclient\Exception Если произошла внутренняя ошибка HTTP-клиента.
      */
     public function send($method, $url, $data = [], $headers = [], $options = [])
     {

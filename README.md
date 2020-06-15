@@ -107,7 +107,7 @@ $message = new Message(['scenario' => Message::SCENARIO_RESPONSE]);
 Пример создания сообщения:
 
 ```php
-$message = [
+$data = [
     'email'    => [
         'from'     => ['Messaging Service', 'noreply@ms.chejam.com'],
         'to'       => ['Vasya Pupkin', 'vasya@mail.net'],
@@ -148,7 +148,7 @@ $message = [
 ];
 
 $message = new Message(['scenario' => Message::SCENARIO_REQUEST]);
-$message->load($this->message, '');
+$message->load($data, '');
 if (!$message->validate()) {
     return $message->errors;
 }

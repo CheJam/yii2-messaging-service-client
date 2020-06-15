@@ -2,6 +2,7 @@
 
 namespace tmcsolution\messagingserviceclient;
 
+use DateTime;
 use tmcsolution\messagingserviceclient\base\Statusable;
 use yii\helpers\ArrayHelper;
 
@@ -23,7 +24,7 @@ class Message extends Statusable
     public $consumerId;
 
     /**
-     * @var \DateTime Дата и время создания сообщения.
+     * @var DateTime Дата и время создания сообщения.
      */
     public $createdAt;
 
@@ -73,7 +74,7 @@ class Message extends Statusable
                 'pattern' => '/^[0-9]{4}-[01][0-9]-[0-3][0-9]T[0-2][0-9]:[0-5][0-9]:[0-5][0-9]\.[0-9]+Z*$/'
             ],
             ['createdAt', 'filter', 'filter' => function ($value) {
-                return new \DateTime($value);
+                return new DateTime($value);
             }],
             [
                 'email',

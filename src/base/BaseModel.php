@@ -47,7 +47,7 @@ class BaseModel extends Model
             $validateArray = false;
 
             $attrName = $attr;
-            if (preg_match('/(.+)\[.+\]/', $attr, $matches) === 1) {
+            if (preg_match('/(.+)\[.+]/', $attr, $matches) === 1) {
                 $attrName = $matches[1];
             }
 
@@ -83,7 +83,7 @@ class BaseModel extends Model
         // Проверяет, является ли значение массивом.
         // Если нет, то проверяет, установлен ли параметр skipScenario.
         // Если в skipScenario установлен массив, то проверяет, есть ли в нём строка с названием данного атрибута.
-        // Если в skipScenario установлена строка, то проверяет, равна ли она названию данного атрибута.
+        // Если в skipScenario установлена строка, то проверяет, равна ли она названию текущего сценария.
         if (!(is_array($this->$attribute) ||
               (isset($params['skipScenario']) &&
                ((is_array($params['skipScenario']) && in_array($this->scenario, $params['skipScenario'])) ||
