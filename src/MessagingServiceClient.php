@@ -16,7 +16,6 @@ class MessagingServiceClient extends ApiClient
      * @param int[] $ids Массив идентификаторов сообщений, который необходимо получить.
      * @return Message[] Массив сообщений, который вернул сервис.
      * @throws InvalidConfigException Если клиент был неправильно сконфигурирован.
-     * @throws \yii\httpclient\Exception Если произошла внутренняя ошибка HTTP-клиента.
      * @throws HttpException Если сервис вернул ошибку.
      */
     public function getMessages($ids = [])
@@ -41,7 +40,6 @@ class MessagingServiceClient extends ApiClient
      * @param $messages Message[] Массив сообщений для создания.
      * @return Message[] Массив созданных сообщений, который вернул сервис.
      * @throws InvalidConfigException Если клиент был неправильно сконфигурирован.
-     * @throws \yii\httpclient\Exception Если произошла внутренняя ошибка HTTP-клиента.
      * @throws HttpException Если сервис вернул ошибку.
      */
     public function createMessages($messages)

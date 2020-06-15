@@ -16,6 +16,7 @@
     "require": {
         "yiisoft/yii2": "^2.0.13.3",
         "yiisoft/yii2-httpclient": "^2.0",
+        "yiisoft/yii2-swiftmailer": "~2.1.0",
         "ext-json": "*"
     },
     "autoload": {
