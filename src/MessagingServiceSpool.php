@@ -83,7 +83,13 @@ class MessagingServiceSpool extends BaseObject implements Swift_Spool
             throw new InvalidConfigException('Messaging service client not initialized');
         }
 
-        $contentType = $message->getContentType();
+        $children = $message->getChildren();
+        if (empty($children)) {
+            $childMail = $message;
+        } else {
+            $childMail = reset($children);
+        }
+        $contentType = $childMail->getContentType();
         $contentTypeArr = explode('/', $contentType);
         $contentType = end($contentTypeArr);
         if (!in_array($contentType, ['html', 'plain'])) {
@@ -93,7 +99,7 @@ class MessagingServiceSpool extends BaseObject implements Swift_Spool
         $base = [
             'from'     => self::transformAddress($message->getFrom()),
             'title'    => $message->getSubject(),
-            'body'     => $message->getBody(),
+            'body'     => $childMail->getBody(),
             'format'   => $contentType,
             'attempts' => $this->_attempts,
             'gateways' => $this->_gateways ?: null,
